@@ -1,6 +1,8 @@
 package littlelib.score;
+
 import java.util.List;
 import java.util.ArrayList;
+import java.time.format.DateTimeFormatter;
 
 public class HighScoreList {
 	private String name;
@@ -15,6 +17,28 @@ public class HighScoreList {
 		this.measurementUnit = measurementUnit;
 		this.lowestIsBest = lowestIsBest;
 		entries = new ArrayList<>();
+	}
+	
+	public HighScoreList(String name, int maxEntries, String measurementUnit) {
+		this(name, maxEntries, measurementUnit, false);
+	}
+	
+	public boolean checkIfWorthy(double value) {
+		if (entries.size() < maxEntries) {
+			return true;
+		}
+		
+		if (!lowestIsBest) {
+			if (value > entries.get(entries.size() - 1).getScore()) {
+				return true;
+			}
+		} else {
+			if (value < entries.get(entries.size() - 1).getScore()) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	public boolean add(String name, double value) {
@@ -53,12 +77,17 @@ public class HighScoreList {
 	
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder(name + "(" + measurementUnit + ")\n");
+		StringBuilder sb = new StringBuilder(name + "\n\n");
 		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy MMM dd HH:mm:ss");
 		int i = 1;
 		for (Entry e : entries) {
-			sb.append(i + ": " + e.getName() + " " + e.getScore() + " (" + e.getCreationDate() + ")\n");
+			sb.append(i + ": " + e.getName() + " - " + e.getScore() + " " + measurementUnit  + " - " + e.getCreationDate().format(formatter) + "\n");
 			i++;
+		}
+		
+		if (entries.size() == 0) {
+			sb.append("No entries.\n");
 		}
 		
 		return sb.toString();

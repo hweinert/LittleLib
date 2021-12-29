@@ -5,6 +5,18 @@ import java.util.Scanner;
 public class Tools {
 	private static Scanner scanner = new Scanner(System.in);
 
+	public static String saveStringInput(String prompt, int minLength, int maxLength) {
+		while (true) {
+			System.out.print(prompt);
+			String input = scanner.nextLine();
+			if (input.length() < minLength || input.length() > maxLength) {
+				System.out.printf("Your input must be %d to %d characters long.\n", minLength, maxLength);
+			} else {
+				return input;
+			}
+		}
+	}
+	
 	public static int saveIntInput(String prompt) {
 		while (true) {
 			try {
