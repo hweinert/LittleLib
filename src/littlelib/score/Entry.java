@@ -1,7 +1,11 @@
 package littlelib.score;
+
+import java.io.Serializable; 
 import java.time.LocalDateTime;
 
-public class Entry {
+public class Entry implements Serializable {
+	private static final long serialVersionUID = -3265757353329225335L;
+	
 	private String name;
 	private double score;
 	private LocalDateTime creationDate;

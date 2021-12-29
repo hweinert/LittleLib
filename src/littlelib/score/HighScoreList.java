@@ -3,8 +3,11 @@ package littlelib.score;
 import java.util.List;
 import java.util.ArrayList;
 import java.time.format.DateTimeFormatter;
+import java.io.Serializable; 
 
-public class HighScoreList {
+public class HighScoreList implements Serializable {
+	private static final long serialVersionUID = -5252915601023530461L;
+	
 	private String name;
 	private int maxEntries;
 	private String measurementUnit;
